@@ -261,9 +261,9 @@ type ProjectCardProps = {
   project: {
     name: string;
     url: string;
-    images: string[];
-    tech: string[];
-    description: string[];
+    images: readonly string[];       
+    tech: readonly string[];        
+    description: readonly string[]; 
     repo: string;
   };
   onViewMore: () => void;
