@@ -24,7 +24,8 @@ export default function Skills() {
       { name: "PostgreSQL", level: "Intermediate" },
       { name: "REST API", level: "Advanced" },
       { name: "GraphQL", level: "Intermediate" },
-      { name: "WebSocket", level: "Basic" }
+      { name: "WebSocket", level: "Basic" },
+       { name: "Redis", level: "Basic" },
     ],
     Cloud: [
       { name: "Docker", level: "Intermediate" },

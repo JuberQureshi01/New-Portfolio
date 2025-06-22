@@ -133,6 +133,24 @@ const projects = {
       repo: "https://github.com/JuberQureshi01/Obys-agency", // replace with actual GitHub repo if available
     },
     {
+      name: "SkinCare",
+      url: "https://six-nine-assignment.vercel.app/",
+      images: [
+        "/images/frontend/project4 (1).png",
+        "/images/frontend/project4 (2).png",
+        "/images/frontend/project4 (3).png",
+        "/images/frontend/project4 (4).png",
+        "/images/frontend/project4 (5).png",
+      ],
+      tech: ["HTML", "CSS", "React", "JavaScript","Tailwind CSS", "GSAP", "ScrollTrigger"],
+      description: [
+        "Developed a responsive skincare landing page using React.js and Vite, focusing on clean UI/UX for product showcasing and brand storytelling.",
+        "Integrated GSAP animations for scroll-triggered and character-based effects, enhancing interactivity and visual engagement.",
+        "Implemented component-based architecture with reusable UI blocks and deployed the project live using Vercel for real-time performance testing and accessibility.",
+      ],
+      repo: "https://github.com/JuberQureshi01/SixNine-Assignment/tree/main",
+    },
+    {
       name: "Premier",
       url: "https://premier-594s.onrender.com/",
       images: [
@@ -195,64 +213,65 @@ export default function ProjectsTabs() {
       </div>
 
       {/* Modal */}
-    {selectedProject && (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-600/50 p-4">
-    <div className="bg-white rounded-3xl max-w-lg w-full p-6 relative">
-      {/* Close button */}
-      <button
-        className="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black"
-        onClick={() => setSelectedProject(null)}
-      >
-        ×
-      </button>
+      {selectedProject && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-600/50 p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 relative">
+            {/* Close button */}
+            <button
+              className="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black"
+              onClick={() => setSelectedProject(null)}
+            >
+              ×
+            </button>
 
-      <h3 className="text-xl font-bold text-center mb-4">
-        {selectedProject.name}
-      </h3>
+            <h3 className="text-xl font-bold text-center mb-4">
+              {selectedProject.name}
+            </h3>
 
-      <Image
-        src={selectedProject.images[0]}
-        alt={selectedProject.name}
-        width={500}
-        height={280}
-        className="rounded-md mx-auto mb-4 object-cover"
-      />
+            <Image
+              src={selectedProject.images[0]}
+              alt={selectedProject.name}
+              width={500}
+              height={280}
+              className="rounded-md mx-auto mb-4 object-cover"
+            />
 
-      <div className="flex justify-center gap-6 mb-4">
-        {selectedProject.repo && (
-          <a
-            href={selectedProject.repo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-500  hover:text-blue-700 flex items-center gap-1"
-          >
-           <FaGithubAlt/> Repository
-          </a>
-        )}
-        {selectedProject.url && (
-          <a
-            href={selectedProject.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-green-600  hover:text-green-800 flex items-center gap-1"
-          >
-            Live Demo <TbExternalLink/>
-          </a>
-        )}
-      </div>
+            <div className="flex justify-center gap-6 mb-4">
+              {selectedProject.repo && (
+                <a
+                  href={selectedProject.repo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500  hover:text-blue-700 flex items-center gap-1"
+                >
+                  <FaGithubAlt /> Repository
+                </a>
+              )}
+              {selectedProject.url && (
+                <a
+                  href={selectedProject.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-600  hover:text-green-800 flex items-center gap-1"
+                >
+                  Live Demo <TbExternalLink />
+                </a>
+              )}
+            </div>
 
-      <ul className="space-y-2 text-sm">
-        {selectedProject.description.map((point, idx) => (
-          <li key={idx} className="flex items-start gap-2">
-            <span className="text-green-500 pt-1"><BsPatchCheckFill/></span>
-            <span>{point}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-)}
-
+            <ul className="space-y-2 text-sm">
+              {selectedProject.description.map((point, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="text-green-500 pt-1">
+                    <BsPatchCheckFill />
+                  </span>
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -261,9 +280,9 @@ type ProjectCardProps = {
   project: {
     name: string;
     url: string;
-    images: readonly string[];       
-    tech: readonly string[];        
-    description: readonly string[]; 
+    images: readonly string[];
+    tech: readonly string[];
+    description: readonly string[];
     repo: string;
   };
   onViewMore: () => void;
