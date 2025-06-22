@@ -18,7 +18,7 @@ export default function AboutMe() {
     <div className="flex justify-center mb-1 text-xl text-black">
       <FiAward />
     </div>
-    <p className="text-sm font-semibold">7+</p>
+    <p className="text-sm font-semibold">8+</p>
     <p className="text-xs text-gray-500">Projects Completed</p>
   </div>
 
