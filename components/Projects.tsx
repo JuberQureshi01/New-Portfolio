@@ -12,8 +12,8 @@ type TabKey = "FullStack" | "Frontend";
 const projects = {
   FullStack: [
     {
-      name: "WonderLust",
-      url: "https://juber-project1.onrender.com/listings",
+      name: "StayFinder",
+      url: "https://stay-finder-green.vercel.app/",
       images: [
         "/images/fullStack/project1.1.png",
         "/images/fullStack/project1.2.png",
@@ -30,8 +30,8 @@ const projects = {
       repo: "https://github.com/JuberQureshi01/WonderLust",
     },
     {
-      name: "BullishX",
-      url: "https://bullishx.vercel.app/",
+      name: "QuickTrade",
+      url: "https://quicktrade.vercel.app/",
       images: [
         "/images/fullStack/bullishx1.png",
         "/images/fullStack/bullishx2.png",
@@ -48,8 +48,8 @@ const projects = {
       repo: "https://github.com/JuberQureshi01/BullishX.git",
     },
     {
-      name: "XSocial",
-      url: "https://web-orcin-kappa.vercel.app/",
+      name: "Social Net",
+      url: "https://social-net-zeta.vercel.app/",
       images: [
         "/images/fullStack/xSocial1.png",
         "/images/fullStack/xSocial2.png",
