@@ -1,7 +1,15 @@
+// components/Projects.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import Image from "next/image";
+import {
+  motion,
+  Variants,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import { BsPatchCheckFill } from "react-icons/bs";
 import { FaGithubAlt } from "react-icons/fa6";
 import { TbExternalLink } from "react-icons/tb";
@@ -110,12 +118,12 @@ const projects = {
     },
     {
       name: "Obys Agency Clone",
-      url: "https://obys-agency-kn73.onrender.com/", // replace with actual live demo link if available
+      url: "https://obys-agency-kn73.onrender.com/",
       images: [
         "/images/frontend/project 2 (1).png",
         "/images/frontend/project 2 (2).png",
         "/images/frontend/project 2 (3).png",
-      ], // add appropriate screenshots in your public folder
+      ],
       tech: [
         "HTML",
         "CSS",
@@ -130,7 +138,7 @@ const projects = {
         "Showcases complex animations, smooth scroll effects, and custom transitions.",
         "Built for design and animation precision using modern web animation libraries.",
       ],
-      repo: "https://github.com/JuberQureshi01/Obys-agency", // replace with actual GitHub repo if available
+      repo: "https://github.com/JuberQureshi01/Obys-agency",
     },
     {
       name: "SkinCare",
@@ -142,7 +150,15 @@ const projects = {
         "/images/frontend/project4 (4).png",
         "/images/frontend/project4 (5).png",
       ],
-      tech: ["HTML", "CSS", "React", "JavaScript","Tailwind CSS", "GSAP", "ScrollTrigger"],
+      tech: [
+        "HTML",
+        "CSS",
+        "React",
+        "JavaScript",
+        "Tailwind CSS",
+        "GSAP",
+        "ScrollTrigger",
+      ],
       description: [
         "Developed a responsive skincare landing page using React.js and Vite, focusing on clean UI/UX for product showcasing and brand storytelling.",
         "Integrated GSAP animations for scroll-triggered and character-based effects, enhancing interactivity and visual engagement.",
@@ -177,14 +193,54 @@ export default function ProjectsTabs() {
 
   const tabs: TabKey[] = ["FullStack", "Frontend"];
 
-  return (
-    <section id="projects" className="bg-white text-black py-12 px-4">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-2">My Projects</h2>
-        <p className="text-sm text-gray-500 mb-6">That I Worked On</p>
+  const sectionVariants: Variants = {
+    hidden: { y: -100, opacity: 0 },
+    visible: {
+      y:0,
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.5,
+         ease: "easeOut",
+      },
+    },
+  };
 
-        {/* Tab Buttons */}
-        <div className="flex justify-center mb-10 overflow-hidden border border-black rounded-full w-fit mx-auto">
+  const titleVariants: Variants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut",
+      },
+    },
+  };
+
+  return (
+    <motion.section
+      id="projects"
+      className="bg-white text-black py-12 px-4"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={sectionVariants}
+    >
+      <div className="max-w-6xl mx-auto text-center">
+        <motion.h2 variants={titleVariants} className="text-3xl font-bold mb-2">
+          My Projects
+        </motion.h2>
+        <motion.p
+          variants={titleVariants}
+          className="text-sm text-gray-500 mb-6"
+        >
+          That I Worked On
+        </motion.p>
+
+        <motion.div
+          variants={titleVariants}
+          className="flex justify-center mb-10 overflow-hidden border border-black rounded-full w-fit mx-auto"
+        >
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -198,9 +254,8 @@ export default function ProjectsTabs() {
               {tab}
             </button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Project Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects[activeTab].map((project, idx) => (
             <ProjectCard
@@ -212,67 +267,77 @@ export default function ProjectsTabs() {
         </div>
       </div>
 
-      {/* Modal */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-600/50 p-4">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 relative">
-            {/* Close button */}
-            <button
-              className="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black"
-              onClick={() => setSelectedProject(null)}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-600/50 p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white rounded-3xl max-w-lg w-full p-6 relative"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
             >
-              ×
-            </button>
+              <button
+                className="absolute top-3 right-4 text-2xl font-bold text-gray-600 hover:text-black"
+                onClick={() => setSelectedProject(null)}
+              >
+                ×
+              </button>
 
-            <h3 className="text-xl font-bold text-center mb-4">
-              {selectedProject.name}
-            </h3>
+              <h3 className="text-xl font-bold text-center mb-4">
+                {selectedProject.name}
+              </h3>
 
-            <Image
-              src={selectedProject.images[0]}
-              alt={selectedProject.name}
-              width={500}
-              height={280}
-              className="rounded-md mx-auto mb-4 object-cover"
-            />
+              <Image
+                src={selectedProject.images[0]}
+                alt={selectedProject.name}
+                width={500}
+                height={280}
+                className="rounded-md mx-auto mb-4 object-cover"
+              />
 
-            <div className="flex justify-center gap-6 mb-4">
-              {selectedProject.repo && (
-                <a
-                  href={selectedProject.repo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500  hover:text-blue-700 flex items-center gap-1"
-                >
-                  <FaGithubAlt /> Repository
-                </a>
-              )}
-              {selectedProject.url && (
-                <a
-                  href={selectedProject.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-green-600  hover:text-green-800 flex items-center gap-1"
-                >
-                  Live Demo <TbExternalLink />
-                </a>
-              )}
-            </div>
+              <div className="flex justify-center gap-6 mb-4">
+                {selectedProject.repo && (
+                  <a
+                    href={selectedProject.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-700 flex items-center gap-1"
+                  >
+                    <FaGithubAlt /> Repository
+                  </a>
+                )}
+                {selectedProject.url && (
+                  <a
+                    href={selectedProject.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-green-600 hover:text-green-800 flex items-center gap-1"
+                  >
+                    Live Demo <TbExternalLink />
+                  </a>
+                )}
+              </div>
 
-            <ul className="space-y-2 text-sm">
-              {selectedProject.description.map((point, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span className="text-green-500 pt-1">
-                    <BsPatchCheckFill />
-                  </span>
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-    </section>
+              <ul className="space-y-2 text-sm">
+                {selectedProject.description.map((point, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-green-500 pt-1">
+                      <BsPatchCheckFill />
+                    </span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.section>
   );
 }
 
@@ -290,6 +355,14 @@ type ProjectCardProps = {
 
 function ProjectCard({ project, onViewMore }: ProjectCardProps) {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -299,8 +372,11 @@ function ProjectCard({ project, onViewMore }: ProjectCardProps) {
   }, [project.images.length]);
 
   return (
-    <div className="bg-white border rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-700">
-      {/* Image Slider */}
+    <motion.div
+      ref={ref}
+      style={{ y, opacity }}
+      className="bg-white border rounded-xl overflow-hidden shadow hover:shadow-lg transition-all duration-700"
+    >
       <div className="relative w-full overflow-hidden h-[170px]">
         <div
           className="flex transition-transform duration-700 ease-in-out"
@@ -341,6 +417,6 @@ function ProjectCard({ project, onViewMore }: ProjectCardProps) {
           View More →
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

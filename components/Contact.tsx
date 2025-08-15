@@ -1,8 +1,10 @@
-'use client';
+// components/Contact.tsx
+"use client";
 
-import { useRef, useState } from 'react';
-import emailjs from 'emailjs-com';
-import { FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
+import { useRef, useState } from "react";
+import emailjs from "emailjs-com";
+import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
+import { motion, Variants } from "framer-motion";
 
 export default function ContactSection() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -16,10 +18,10 @@ export default function ContactSection() {
 
     emailjs
       .sendForm(
-        'service_lse73ll',
-        'template_qqp39sf',
+        "service_lse73ll",
+        "template_qqp39sf",
         formRef.current!,
-        'bbXk3jInFwWyWSOQV'
+        "bbXk3jInFwWyWSOQV"
       )
       .then(
         () => {
@@ -29,22 +31,51 @@ export default function ContactSection() {
         },
         (error) => {
           setLoading(false);
-          console.error('Email send error:', error.text);
+          console.error("Email send error:", error.text);
         }
       );
   };
 
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants: Variants = {
+    hidden: { y: -50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
-    <section id="contact" className="bg-white text-black py-16 px-4 md:px-8 lg:px-24">
+    <motion.section
+      id="contact"
+      className="bg-white text-black py-16 px-4 md:px-8 lg:px-24"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      variants={containerVariants}
+    >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
+        <motion.div variants={itemVariants} className="text-center mb-12">
           <h2 className="text-4xl font-bold">Get in Touch</h2>
           <p className="text-gray-500 mt-2">I'd love to hear from you</p>
-        </div>
+        </motion.div>
 
         <div className="grid md:grid-cols-2 gap-10">
           {/* Contact Options */}
-          <div className="space-y-6">
+          <motion.div variants={itemVariants} className="space-y-6">
             {/* Email */}
             <div className="p-6 rounded-xl border shadow-sm">
               <div className="text-xl font-semibold flex items-center gap-2">
@@ -68,6 +99,7 @@ export default function ContactSection() {
               <a
                 href="https://github.com/JuberQureshi01"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="text-blue-500 mt-1 inline-block"
               >
                 Visit →
@@ -83,15 +115,21 @@ export default function ContactSection() {
               <a
                 href="https://www.linkedin.com/in/JuberQureshi/"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="text-blue-500 mt-1 inline-block"
               >
                 Connect →
               </a>
             </div>
-          </div>
+          </motion.div>
 
           {/* Contact Form */}
-          <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
+          <motion.form
+            ref={formRef}
+            onSubmit={sendEmail}
+            className="space-y-6"
+            variants={itemVariants}
+          >
             <div>
               <label className="block mb-1 text-sm font-medium">Name</label>
               <input
@@ -130,13 +168,15 @@ export default function ContactSection() {
               disabled={loading}
               className="bg-black cursor-pointer text-white px-6 py-3 rounded-md hover:bg-gray-800 transition flex items-center gap-2"
             >
-              {loading ? 'Sending...' : 'Send Message'} 📩
+              {loading ? "Sending..." : "Send Message"} 📩
             </button>
 
-            {success && <p className="text-green-600">Message sent successfully!</p>}
-          </form>
+            {success && (
+              <p className="text-green-600">Message sent successfully!</p>
+            )}
+          </motion.form>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
