@@ -60,7 +60,7 @@ export default function AboutMe() {
           <div className="flex justify-center mb-1 text-xl text-black">
             <FaLaptopCode />
           </div>
-          <p className="text-sm font-semibold">1 Year Plus</p>
+          <p className="text-sm font-semibold">2 Year Plus</p>
           <p className="text-xs text-gray-500">Hands-on Experience</p>
         </div>
       </motion.div>
