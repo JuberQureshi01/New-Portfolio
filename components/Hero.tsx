@@ -81,7 +81,7 @@ export default function Hero() {
             <FaGithub />
           </a>
           <a
-            href="https://x.com/Juberq_01"
+            href="https://x.com"
             className="text-black text-2xl md:text-3xl bg-white hover:text-blue-500 transition-colors"
           >
             <FaSquareXTwitter />
